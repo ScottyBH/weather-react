@@ -1,4 +1,5 @@
 import "./App.css";
+import Forecast from "./Forecast";
 
 function App() {
   let weatherInfo = {
@@ -79,6 +80,8 @@ function App() {
                 </div>
               </div>
             </div>
+            <br />
+            <Forecast />
           </div>
           <footer>
             <a

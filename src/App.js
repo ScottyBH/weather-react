@@ -57,11 +57,11 @@ function App() {
                       </span>
                       <span className="deg">
                         °
-                        <a href="#" id="fehrenheit-link">
+                        <a href="/" id="fehrenheit-link">
                           F
                         </a>{" "}
                         |
-                        <a href="#" id="celcius-link">
+                        <a href="/" id="celcius-link">
                           C
                         </a>
                       </span>

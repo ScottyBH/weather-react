@@ -25,6 +25,7 @@ function App() {
                     aria-describedby="Search"
                     placeholder="Enter City"
                     autocomplete="off"
+                    autoFocus="on"
                   ></input>
                   <button type="submit" id="search-button">
                     Search

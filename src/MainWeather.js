@@ -1,5 +1,6 @@
 import React from "react";
 import FormattedDate from "./FormattedDate";
+import WeatherTemp from "./WeatherTemp";
 
 export default function MainWeather(props) {
   return (
@@ -25,19 +26,7 @@ export default function MainWeather(props) {
           <div className="card">
             <div className="card-body">
               <p className="card-text">
-                <span className="today" id="today-temp">
-                  {Math.round(props.data.temperature)}
-                </span>
-                <span className="deg">
-                  °
-                  <a href="/" id="fehrenheit-link">
-                    F
-                  </a>{" "}
-                  |
-                  <a href="/" id="celcius-link">
-                    C
-                  </a>
-                </span>
+                <WeatherTemp fahrenheit={props.data.temperature} />
                 <span className="units">
                   <img
                     src={props.data.icon}

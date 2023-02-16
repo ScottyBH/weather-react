@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import FormattedDate from "./FormattedDate";
 import "./App.css";
 import Forecast from "./Forecast";
 import axios from "axios";
@@ -6,7 +7,6 @@ import axios from "axios";
 function App() {
   const [weatherData, setWeatherData] = useState({ ready: false });
   function handleResponse(response) {
-    console.log(response.data);
     setWeatherData({
       ready: true,
       temperature: response.data.main.temp,
@@ -14,13 +14,12 @@ function App() {
       humidity: response.data.main.humidity,
       wind: response.data.wind.speed,
       city: response.data.name,
-      date: "Friday 11:55",
+      date: new Date(response.data.dt * 1000),
       icon: `https://ssl.gstatic.com/onebox/weather/64/sunny.png`,
     });
   }
 
   if (weatherData.ready) {
-    let weatherInfo = {};
     return (
       <div className="App">
         <div className="container">
@@ -52,7 +51,7 @@ function App() {
                         {weatherData.city}
                       </p>
                       <p className="day-temp" id="today-date">
-                        {weatherData.date}
+                        <FormattedDate date={weatherData.date} />
                       </p>
                       <div>
                         Wind: <span id="wind">{weatherData.wind}</span> mph

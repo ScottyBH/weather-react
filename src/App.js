@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import FormattedDate from "./FormattedDate";
+import MainWeather from "./MainWeather";
 import "./App.css";
 import Forecast from "./Forecast";
 import axios from "axios";
 
-function App() {
+export default function App(props) {
+  const [city, setCity] = useState(props.defaultCity);
   const [weatherData, setWeatherData] = useState({ ready: false });
   function handleResponse(response) {
     setWeatherData({
@@ -15,8 +16,22 @@ function App() {
       wind: response.data.wind.speed,
       city: response.data.name,
       date: new Date(response.data.dt * 1000),
-      icon: `https://ssl.gstatic.com/onebox/weather/64/sunny.png`,
+      icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
     });
+  }
+  function search() {
+    const apiKey = "3a4be67dc34991f831e260af364d7a39";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+    axios.get(apiUrl).then(handleResponse);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    search(city);
+  }
+
+  function handleCityChange(event) {
+    setCity(event.target.value);
   }
 
   if (weatherData.ready) {
@@ -26,7 +41,7 @@ function App() {
           <div className="card">
             <div className="card-body">
               <div className="col">
-                <form id="search-bar">
+                <form id="search-bar" onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <input
                       type="Search"
@@ -36,63 +51,14 @@ function App() {
                       placeholder="Enter City"
                       autocomplete="off"
                       autoFocus="on"
+                      onChange={handleCityChange}
                     ></input>
                     <button type="submit" id="search-button">
                       Search
                     </button>
                   </div>
                 </form>
-              </div>
-              <div className="row">
-                <div className="col-sm-6">
-                  <div className="card">
-                    <div className="card-body">
-                      <p className="city-state" id="city">
-                        {weatherData.city}
-                      </p>
-                      <p className="day-temp" id="today-date">
-                        <FormattedDate date={weatherData.date} />
-                      </p>
-                      <div>
-                        Wind: <span id="wind">{weatherData.wind}</span> mph
-                      </div>
-                      Humidity:{" "}
-                      <span id="humidity">{weatherData.humidity}</span>%
-                    </div>
-                  </div>
-                </div>
-                <div className="col-sm-6">
-                  <div className="card">
-                    <div className="card-body">
-                      <p className="card-text">
-                        <span className="today" id="today-temp">
-                          {Math.round(weatherData.temperature)}
-                        </span>
-                        <span className="deg">
-                          °
-                          <a href="/" id="fehrenheit-link">
-                            F
-                          </a>{" "}
-                          |
-                          <a href="/" id="celcius-link">
-                            C
-                          </a>
-                        </span>
-                        <span className="units">
-                          <img
-                            src={weatherData.icon}
-                            alt={weatherData.conditions}
-                            id="icon"
-                          ></img>
-                        </span>
-                        <br />
-                        <div id="now-weather" className="text-capitalize">
-                          {weatherData.conditions}
-                        </div>
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <MainWeather data={weatherData} />
               </div>
               <br />
               <Forecast />
@@ -112,12 +78,7 @@ function App() {
       </div>
     );
   } else {
-    const apiKey = "3a4be67dc34991f831e260af364d7a39";
-    let city = "Phoenix";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
-    axios.get(apiUrl).then(handleResponse);
+    search();
     return "Leading...";
   }
 }
-
-export default App;

@@ -16,7 +16,7 @@ export default function MainWeather(props) {
                 <FormattedDate date={props.data.date} />
               </p>
               <div>
-                Wind: <span id="wind">{Math.roundprops.data.wind}</span> mph
+                Wind: <span id="wind">{Math.round(props.data.wind)}</span> mph
               </div>
               Humidity: <span id="humidity">{props.data.humidity}</span>%
             </div>

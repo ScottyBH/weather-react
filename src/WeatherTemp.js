@@ -10,7 +10,7 @@ export default function WeatherTemp(props) {
 
   function convertToFahrenheit(event) {
     event.preventDefault();
-    setUnit("fehrenheit");
+    setUnit("fahrenheit");
   }
   if (unit === "fahrenheit") {
     return (
@@ -19,9 +19,9 @@ export default function WeatherTemp(props) {
           {Math.round(props.fahrenheit)}
         </span>
         <span className="deg">
-          ° F |{" "}
+          °F |{" "}
           <a href="/" id="celsius-link" onClick={convertToCelsius}>
-            C
+            °C
           </a>
         </span>
       </div>
@@ -35,9 +35,9 @@ export default function WeatherTemp(props) {
         </span>
         <span className="deg">
           <a href="/" id="celsius-link" onClick={convertToFahrenheit}>
-            ° F
+            °F
           </a>{" "}
-          | C
+          | °C
         </span>
       </div>
     );

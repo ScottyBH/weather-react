@@ -10,6 +10,7 @@ export default function App(props) {
   function handleResponse(response) {
     setWeatherData({
       ready: true,
+      coord: response.data.coord,
       temperature: response.data.main.temp,
       conditions: response.data.weather[0].description,
       humidity: response.data.main.humidity,
@@ -61,7 +62,7 @@ export default function App(props) {
                 <MainWeather data={weatherData} />
               </div>
               <br />
-              <Forecast />
+              <Forecast coord={weatherData.coord} />
             </div>
             <footer>
               <a

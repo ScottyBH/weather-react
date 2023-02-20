@@ -1,110 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import WeatherForecastDay from "./WeatherForecastDay";
 
-export default function Forecast() {
-  return (
-    <div>
-      <div className="row">
-        <div className="col-sm">
-          <div className="card">
-            <div className="card-body">
-              <p className="card-text">
-                Thu
-                <br />
-                <div>
-                  <br />
-                  <img
-                    src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
-                    alt="{weatherInfo.conditions}"
-                    id="icon"
-                  ></img>
-                </div>
-                <br />
-                <span>81°F</span>
-              </p>
-            </div>
+export default function Forecast(props) {
+  let [loaded, setLoaded] = useState(false);
+  let [forecast, setForecast] = useState(null);
+  function handleResponse(response) {
+    setForecast(response.data.daily);
+    setLoaded(true);
+    console.log(forecast);
+  }
+
+  if (loaded) {
+    return (
+      <div>
+        <div className="row">
+          <div className="col-sm">
+            <WeatherForecastDay data={forecast[1]} />
           </div>
-        </div>
-        <div className="col-sm">
-          <div className="card">
-            <div className="card-body">
-              <p className="card-text">
-                Fri
-                <br />
-                <div>
-                  <br />
-                  <img
-                    src="https://ssl.gstatic.com/onebox/weather/64/rain.png"
-                    alt="{weatherInfo.conditions}"
-                    id="icon"
-                  ></img>
-                </div>
-                <br />
-                <span>70°F</span>
-              </p>
-            </div>
+          <div className="col-sm">
+            <WeatherForecastDay data={forecast[2]} />
           </div>
-        </div>
-        <div className="col-sm">
-          <div className="card">
-            <div className="card-body">
-              <p className="card-text">
-                Sat
-                <br />
-                <div>
-                  <br />
-                  <img
-                    src="https://ssl.gstatic.com/onebox/weather/64/cloudy.png"
-                    alt="{weatherInfo.conditions}"
-                    id="icon"
-                  ></img>
-                </div>
-                <br />
-                <span>70°F</span>
-              </p>
-            </div>
+          <div className="col-sm">
+            <WeatherForecastDay data={forecast[3]} />
           </div>
-        </div>
-        <div className="col-sm">
-          <div className="card">
-            <div className="card-body">
-              <p className="card-text">
-                Sun
-                <br />
-                <div>
-                  <br />
-                  <img
-                    src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
-                    alt="{weatherInfo.conditions}"
-                    id="icon"
-                  ></img>
-                </div>
-                <br />
-                <span>80°F</span>
-              </p>
-            </div>
+          <div className="col-sm">
+            <WeatherForecastDay data={forecast[4]} />
           </div>
-        </div>
-        <div className="col-sm">
-          <div className="card">
-            <div className="card-body">
-              <p className="card-text">
-                Mon
-                <br />
-                <div>
-                  <br />
-                  <img
-                    src="https://ssl.gstatic.com/onebox/weather/64/cloudy.png"
-                    alt="{weatherInfo.conditions}"
-                    id="icon"
-                  ></img>
-                </div>
-                <br />
-                <span>81°F</span>
-              </p>
-            </div>
+          <div className="col-sm">
+            <WeatherForecastDay data={forecast[5]} />
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    let apiKey = "8402ccd9e55983fce71eeeaa1d2bd1fc";
+    let lon = props.coord.lon;
+    let lat = props.coord.lat;
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
+
+    axios.get(apiUrl).then(handleResponse);
+
+    return null;
+  }
 }

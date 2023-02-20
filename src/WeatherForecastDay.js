@@ -29,7 +29,7 @@ export default function WeatherForecastDay(props) {
           <div>
             <br />
             <img
-              src={props.data.weather[0].icon}
+              src="https://openweathermap.org/img/wn/{props.data.weather[0].icon}@2x.png"
               alt={props.data.weather[0].description}
               id="icon"
             ></img>

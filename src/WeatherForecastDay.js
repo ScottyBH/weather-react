@@ -29,10 +29,10 @@ export default function WeatherForecastDay(props) {
           <div>
             <br />
             <img
-              src="https://openweathermap.org/img/wn/{props.data.weather[0].icon}@2x.png"
+              src={`https://openweathermap.org/img/wn/${props.data.weather[0].icon}@2x.png`}
               alt={props.data.weather[0].description}
               id="icon"
-            ></img>
+            />
           </div>
           <br />
           <span className="Forecast-temp-max">{maxTemp()}</span>
